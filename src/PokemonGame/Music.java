@@ -8,10 +8,10 @@ import java.net.URL;
 
 public class Music {
 
-    private static String[] attackSounds = new String[] {"src/Music/Attacks/Barrier.wav", "src/Music/Attacks/Clamp.wav", "src/Music/Attacks/DoubleKickSingle.wav",
-            "src/Music/Attacks/EggBomb1.wav", "src/Music/Attacks/Explosion.wav", "src/Music/Attacks/HyperBeamLaser.wav", "src/Music/Attacks/IcePunch.wav",
-            "src/Music/Attacks/Lick.wav", "src/Music/Attacks/LightScreenSingle.wav", "src/Music/Attacks/Psywave1.wav", "src/Music/Attacks/Sharpen.wav",
-            "src/Music/Attacks/WaterGun.wav"};
+    private static String[] attackSounds = new String[] {"/Music/Attacks/Barrier.wav", "/Music/Attacks/Clamp.wav", "/Music/Attacks/DoubleKickSingle.wav",
+            "/Music/Attacks/EggBomb1.wav", "/Music/Attacks/Explosion.wav", "/Music/Attacks/HyperBeamLaser.wav", "/Music/Attacks/IcePunch.wav",
+            "/Music/Attacks/Lick.wav", "/Music/Attacks/LightScreenSingle.wav", "/Music/Attacks/Psywave1.wav", "/Music/Attacks/Sharpen.wav",
+            "/Music/Attacks/WaterGun.wav"};
 
     private Clip clip;
 

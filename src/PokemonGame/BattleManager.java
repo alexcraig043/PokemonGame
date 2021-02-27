@@ -2,21 +2,41 @@ package PokemonGame;
 
 import java.util.*;
 import java.io.*;
-import javax.sound.sampled.*;
 import java.util.concurrent.TimeUnit;
 import java.lang.*;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 
 public class BattleManager {
     public static boolean running = true;
     static Scanner in = new Scanner(System.in);
 
-    private Music backGroundMusic = new Music("src/Music/background.wav");
-    private Music healSound = new Music("src/Music/heal.wav");
-    private Music cry = new Music("src/Music/cry.wav");
-    private Music victorySound = new Music("src/Music/victory.wav");
-    private Music defeatSound = new Music("src/Music/defeat.wav");
+    private Music backGroundMusic = new Music("/Music/background.wav");
+    private Music healSound = new Music("/Music/heal.wav");
+    private Music cry = new Music("/Music/cry.wav");
+    private Music victorySound = new Music("/Music/victory.wav");
+    private Music defeatSound = new Music("/Music/defeat.wav");
 
     public BattleManager() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    }
+
+    public static void startBattle() throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
+        BattleManager battle = new BattleManager();
+        battle.startBackgroundMusic();
+
+        Pokemon enemy = new Pokemon();
+        System.out.println("\n\tAnother trainer is issuing a challenge!\n\n\t"
+                + enemy.getName() + " has appeared!" + "\n\n");
+        Pokemon player = new Pokemon();
+        enemy.displayStats();
+        System.out.println("\n\tWhat do you want to name your pokemon?\n");
+        player.chooseName();
+        System.out.println("\n\tYou choose: " + player.getName() + "!\n\n\t");
+        player.displayStats();
+
+        battle.gameLoop(player, enemy);
+
     }
 
     public void gameLoop(Pokemon player, Pokemon enemy) throws InterruptedException, UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -28,6 +48,7 @@ public class BattleManager {
             }
         }
     }
+
     public void attack(Pokemon attacker, Pokemon victim) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
         generateRandomAttackSound().start();
         String attackType = attacker.getRandomAttack();
@@ -80,6 +101,15 @@ public class BattleManager {
 
     }
 
+    public void startBackgroundMusic() {
+        backGroundMusic.start();
+    }
+
+    public Music generateRandomAttackSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        Music attackSound = new Music(Music.getRandomAttackSound());
+        return attackSound;
+    }
+
     private void enemyDecision(Pokemon player, Pokemon enemy) throws InterruptedException, UnsupportedAudioFileException, IOException, LineUnavailableException {
         int superComplexAI = Pokemon.randomNum(1, 4);
         if (enemy.getHP() < enemy.getMaxHP() * .5) {
@@ -93,46 +123,49 @@ public class BattleManager {
         }
     }
 
-    private void checkWin(Pokemon player, Pokemon enemy) throws InterruptedException {
+    private void checkWin(Pokemon player, Pokemon enemy) throws InterruptedException, UnsupportedAudioFileException, IOException, LineUnavailableException {
         if (enemy.getHP() <= 0) {
             TimeUnit.SECONDS.sleep(2);
             backGroundMusic.stop();
             System.out.println("\n\n\t" + enemy.getName() + " has collapsed. " + player.getName() + " is victorious!\n");
-            System.out.println("\t\t**CONGRATULATIONS YOU WIN**\n\n");
+            System.out.println("\t\t**CONGRATULATIONS YOU WIN**\n");
             victorySound.start();
-            TimeUnit.SECONDS.sleep(3);
-            running = false;
+            playAgain();
         }
     }
 
-    private void checkLoss(Pokemon player, Pokemon enemy) throws InterruptedException {
+    private void checkLoss(Pokemon player, Pokemon enemy) throws InterruptedException, UnsupportedAudioFileException, IOException, LineUnavailableException {
         if (player.getHP() <= 0) {
             TimeUnit.SECONDS.sleep(2);
             backGroundMusic.stop();
             System.out.println("\n\n\t" + player.getName() + " has collapsed. " + enemy.getName() + " is victorious!\n");
-            System.out.println("\t\t**YOU ARE DEFEATED**\n\n");
+            System.out.println("\t\t**YOU ARE DEFEATED**\n");
             defeatSound.start();
-            TimeUnit.SECONDS.sleep(3);
-            running = false;
+            playAgain();
         }
     }
 
-    private void coward(Pokemon player, Pokemon enemy) throws InterruptedException {
+    private void coward(Pokemon player, Pokemon enemy) throws InterruptedException, UnsupportedAudioFileException, IOException, LineUnavailableException {
         TimeUnit.SECONDS.sleep(2);
         backGroundMusic.stop();
         cry.start();
         System.out.println("\n\n\tYou coward! " + player.getName() + " dies anyways! You lose!\n\t\t" + enemy.getName() + " laughs at your miserable defeat.");
-        System.out.println("\n\t\t**GAME OVER**\n\n");
-        TimeUnit.SECONDS.sleep(4);
-        running = false;
+        System.out.println("\n\t\t**GAME OVER**\n");
+        playAgain();
     }
 
-    public void startBackgroundMusic() {
-        backGroundMusic.start();
+    public void playAgain() throws InterruptedException, UnsupportedAudioFileException, LineUnavailableException, IOException {
+        System.out.println("\n\tWould you like to play again? (y/n)\n");
+
+        String input = in.nextLine();
+        if (input.equals("y")) {
+            BattleManager.startBattle();
+        } else if (input.equals("n")) {
+            running = false;
+        } else {
+            System.out.println("\n\tInvalid input!");
+            playAgain();
+        }
     }
 
-    public Music generateRandomAttackSound() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        Music attackSound = new Music(Music.getRandomAttackSound());
-        return attackSound;
-    }
 }
