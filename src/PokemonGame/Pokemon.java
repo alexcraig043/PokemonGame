@@ -77,6 +77,11 @@ public class Pokemon {
         return possibleMoves[randomNum(0, getAllPossibleMoves().length - 1)];
     }
 
+    public String getRandomAttack() {
+        String attackType = getMoves()[Pokemon.randomNum(0, getMoves().length - 1)];
+        return attackType;
+    }
+
     public String[] getAllPossiblePokemon() {
         return possiblePokemon;
     }

@@ -30,7 +30,7 @@ public class BattleManager {
     }
     public void attack(Pokemon attacker, Pokemon victim) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
         generateRandomAttackSound().start();
-        String attackType = attacker.getMoves()[Pokemon.randomNum(0, attacker.getMoves().length - 1)];
+        String attackType = attacker.getRandomAttack();
         attackType = "**" + attackType + "**";
         int attackAmount = attacker.rollForAttack();
         int defenseAmount = victim.rollForDefense();
