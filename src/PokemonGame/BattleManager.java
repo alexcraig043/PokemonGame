@@ -146,7 +146,6 @@ public class BattleManager {
     }
 
     private void coward(Pokemon player, Pokemon enemy) throws InterruptedException, UnsupportedAudioFileException, IOException, LineUnavailableException {
-        TimeUnit.SECONDS.sleep(2);
         backGroundMusic.stop();
         cry.start();
         System.out.println("\n\n\tYou coward! " + player.getName() + " dies anyways! You lose!\n\t\t" + enemy.getName() + " laughs at your miserable defeat.");
