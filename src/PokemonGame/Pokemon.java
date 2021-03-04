@@ -65,7 +65,7 @@ public class Pokemon {
         return possibleMoves;
     }
 
-    public String[] getThreeRandomMoves() {
+    public static String[] getThreeRandomMoves() {
         String[] threeRandomMoves = new String[3];
         for (int i = 0; i < threeRandomMoves.length; i++) {
             threeRandomMoves[i] = getSingleRandomMove().toUpperCase();
@@ -73,20 +73,19 @@ public class Pokemon {
         return threeRandomMoves;
     }
 
-    public String getSingleRandomMove() {
+    public static String getSingleRandomMove() {
         return possibleMoves[randomNum(0, getAllPossibleMoves().length - 1)];
     }
 
     public String getRandomAttack() {
-        String attackType = getMoves()[Pokemon.randomNum(0, getMoves().length - 1)];
-        return attackType;
+        return getMoves()[Pokemon.randomNum(0, getMoves().length - 1)];
     }
 
-    public String[] getAllPossiblePokemon() {
+    public static String[] getAllPossiblePokemon() {
         return possiblePokemon;
     }
 
-    public String getSingleRandomPokemon() {
+    public static String getSingleRandomPokemon() {
         int i = randomNum(0, possiblePokemon.length - 1);
         return possiblePokemon[i];
     }

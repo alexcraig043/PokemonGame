@@ -9,6 +9,5 @@ public class Main {
 
     public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException, InterruptedException {
         BattleManager.startBattle();
-
     }
 }
